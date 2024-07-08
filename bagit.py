@@ -1508,6 +1508,13 @@ def _make_parser():
             " without performing checksum validation to detect corruption."
         ),
     )
+    parser.add_argument(
+        "--tagmanifest-only",
+        action="store_true",
+        help=_(
+            "Update tagmanifest without recalculating payload checksums."
+        ),
+    )
 
     checksum_args = parser.add_argument_group(
         _("Checksum Algorithms"),
@@ -1601,6 +1608,22 @@ def main():
                     _("%(bag)s is invalid: %(error)s"), {"bag": bag_dir, "error": e}
                 )
                 rc = 1
+
+        # recalculate tagmanifest:
+        elif args.tagmanifest_only:
+            try:
+                bag_dir = os.path.abspath(bag_dir)
+                os.chdir(bag_dir)
+                bag = Bag(bag_dir)
+
+                for c in args.checksums:
+                    _make_tagmanifest_file(c, bag_dir, encoding="utf-8")
+            except Exception as exc:
+                LOGGER.error(
+                    _("Failed to create tagmanifest for bag in %(bag_directory)s: %(error)s"),
+                    {"bag_directory": bag_dir, "error": exc},
+                    exc_info=True,
+                )
 
         # make the bag
         else:
