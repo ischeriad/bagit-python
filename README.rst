@@ -1,8 +1,6 @@
 bagit-python
 ============
 
-|Build Status| |Coverage Status|
-
 bagit is a Python library and command line utility for working with
 `BagIt <http://purl.org/net/bagit>`__ style packages.
 
@@ -16,7 +14,7 @@ project as needed or you can install globally with:
 
     pip install bagit
 
-Python v2.7+ is required.
+A supported version of Python 3 is required.
 
 Command Line Usage
 ------------------
@@ -226,20 +224,11 @@ Contributing to bagit-python development
 Running the tests
 ~~~~~~~~~~~~~~~~~
 
-You can quickly run the tests by having setuptools install dependencies:
+You can quickly run the tests using the built-in unittest framework:
 
 ::
 
-    python setup.py test
-
-Once your code is working, you can use
-`Tox <https://tox.readthedocs.io/>`__ to run the tests with every
-supported version of Python which you have installed on the local
-system:
-
-::
-
-    tox
+    python -m unittest discover
 
 If you have Docker installed, you can run the tests under Linux inside a
 container:
